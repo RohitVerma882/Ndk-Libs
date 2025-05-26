@@ -57,7 +57,7 @@ jobs:
           set -e
           git add build/*.xz 2>/dev/null || echo "No .xz files to add"
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update build .xz artifacts [skip ci]"
+            git commit -m "update build .xz artifacts"
             git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" HEAD:main
           else
             echo "No changes to commit"
