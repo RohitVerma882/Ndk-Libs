@@ -2,8 +2,8 @@ set(BROTLI_SRC_DIR "${SRC_DIR}/brotli/c")
 set(BROTLI_OUT_DIR "${OUT_DIR}/brotli")
 
 file(GLOB BROTLI_COMMON_SRCS "${BROTLI_SRC_DIR}/common/*.c")
-file(GLOB BROTLI_DEC_SRCS     "${BROTLI_SRC_DIR}/dec/*.c")
-file(GLOB BROTLI_ENC_SRCS     "${BROTLI_SRC_DIR}/enc/*.c")
+file(GLOB BROTLI_DEC_SRCS "${BROTLI_SRC_DIR}/dec/*.c")
+file(GLOB BROTLI_ENC_SRCS "${BROTLI_SRC_DIR}/enc/*.c")
 
 
 add_library(brotli STATIC
