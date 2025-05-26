@@ -2,16 +2,19 @@ name: Build Libraries
 
 on:
   workflow_dispatch:
-
+  
 jobs:
   build:
     name: Build libraries
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           submodules: recursive
+          fetch-depth: 0
           
       - name: Setup NDK
         uses: nttld/setup-ndk@v1
@@ -44,12 +47,12 @@ jobs:
           
       - name: Configure Git user for CI
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+        
       - name: Commit and push .xz build artifacts
         env:
-          GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
           git add build/*.xz 2>/dev/null || echo "No .xz files to add"
