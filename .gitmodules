@@ -1,0 +1,15 @@
+[submodule "src/abseil-cpp"]
+	path = src/abseil-cpp
+	url = https://android.googlesource.com/platform/external/abseil-cpp
+[submodule "src/brotli"]
+	path = src/brotli
+	url = https://android.googlesource.com/platform/external/brotli
+[submodule "src/fmtlib"]
+	path = src/fmtlib
+	url = https://android.googlesource.com/platform/external/fmtlib
+[submodule "src/zstd"]
+	path = src/zstd
+	url = https://android.googlesource.com/platform/external/zstd
+[submodule "src/lz4"]
+	path = src/lz4
+	url = https://android.googlesource.com/platform/external/lz4
