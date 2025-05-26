@@ -34,6 +34,7 @@ endforeach()
 
 set(ABSL_SRCS ${FILTERED_ABSL_SRCS} CACHE INTERNAL "Filtered absl sources")
 
+
 set(ABSL_INCLUDE_DIR "${ABSL_OUT_DIR}/include")
 foreach(header ${ABSL_HDRS})
     file(RELATIVE_PATH relpath "${ABSL_SRC_DIR}" "${header}")
@@ -46,6 +47,7 @@ foreach(header ${ABSL_HDRS})
     file(COPY "${header}" DESTINATION "${dest_dir}")
 endforeach()
 
+
 add_library(absl STATIC ${ABSL_SRCS})
 target_include_directories(absl
     PRIVATE
@@ -56,6 +58,7 @@ target_include_directories(absl
 set_target_properties(absl PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${ABSL_OUT_DIR}/lib/${ANDROID_ABI}"
 )
+
 
 if(CMAKE_STRIP AND CMAKE_RANLIB)
     add_custom_command(

@@ -13,3 +13,9 @@
 [submodule "src/lz4"]
 	path = src/lz4
 	url = https://android.googlesource.com/platform/external/lz4
+[submodule "src/libxml2"]
+	path = src/libxml2
+	url = https://android.googlesource.com/platform/external/libxml2
+[submodule "src/libusb"]
+	path = src/libusb
+	url = https://android.googlesource.com/platform/external/libusb
