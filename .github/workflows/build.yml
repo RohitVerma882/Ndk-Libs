@@ -1,0 +1,34 @@
+name: Libraries Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+          
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r27b
+          add-to-path: false
+          
+      - name: Install Prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build \
+          binutils llvm coreutils file tar
+         
+      - name: Make build.sh Executable
+        run: chmod +x ./build.sh
+        
+      - name: Build All
+        run: ./build.sh
+        env:
+          NDK_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}
