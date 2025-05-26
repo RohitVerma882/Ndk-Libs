@@ -33,7 +33,7 @@ for ABI in "${ABIS[@]}"; do
         -B "$BUILD_ABI_DIR" \
         -S "$SCRIPT_DIR"
 
-    ninja -C "$BUILD_ABI_DIR" -j4
+    ninja -C "$BUILD_ABI_DIR" -j"$(nproc)"
 done
 
 for PKG_DIR in "$OUT_DIR"/*/; do

@@ -1,16 +1,17 @@
-name: Libraries Build
+name: Build Libraries
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
+    name: Build libraries
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          submodules: 'true'
+          submodules: recursive
           
       - name: Setup NDK
         uses: nttld/setup-ndk@v1
@@ -22,13 +23,39 @@ jobs:
       - name: Install Prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake ninja-build \
-          binutils llvm coreutils file tar
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            ninja-build \
+            binutils \
+            llvm \
+            coreutils \
+            file \
+            tar \
+            git
          
-      - name: Make build.sh Executable
+      - name: Ensure build.sh is executable
         run: chmod +x ./build.sh
         
-      - name: Build All
-        run: ./build.sh
+      - name: Build all libraries
         env:
           NDK_PATH: ${{ steps.setup-ndk.outputs.ndk-path }}
+        run: ./build.sh
+          
+      - name: Configure Git user for CI
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push .xz build artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.USER_TOKEN }}
+        run: |
+          set -e
+          git add build/*.xz 2>/dev/null || echo "No .xz files to add"
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update build .xz artifacts [skip ci]"
+            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" HEAD:main
+          else
+            echo "No changes to commit"
+          fi
